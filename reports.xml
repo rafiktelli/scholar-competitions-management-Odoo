@@ -1,0 +1,84 @@
+<odoo>
+
+    <record id="report_list_competition" model="ir.actions.report">
+        <field name="name">Competition List Report</field>
+        <field name="model">esicompet.competition</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">esicompet.report_list_competition_view</field>
+        <field name="report_file">esicompet.report_list_competition</field>
+        <field name="binding_model_id" ref="model_esicompet_competition"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_competition_participations" model="ir.actions.report">
+        <field name="name">Competition Participations Report</field>
+        <field name="model">esicompet.competition</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">esicompet.report_competition_participations_view</field>
+        <field name="report_file">esicompet.report_competition_participations</field>
+        <field name="binding_model_id" ref="model_esicompet_competition"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_justif_abs" model="ir.actions.report">
+        <field name="name">Justificatif d'Absence Report</field>
+        <field name="model">esicompet.participation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">esicompet.report_justif_abs_view</field>
+        <field name="report_file">esicompet.report_justif_abs</field>
+        <field name="binding_model_id" ref="model_esicompet_participation"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_list_competition_view">
+        <t t-call="web.html_container">
+        <h2>Competitions list</h2>
+            <t t-foreach="docs" t-as="doc">
+                <li>
+                    <t t-esc="doc.name"/>
+                </li>
+                <p>Date début</p>
+                <t t-esc="doc.start_date"/>
+                <p>Date fin</p>
+                <t t-esc="doc.end_date"/>
+                <p>Lieu</p>
+                <t t-esc="doc.place"/>
+                
+            </t>
+        </t>
+    </template>
+
+    <template id="report_justif_abs_view">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <h2>Justificatif d'Absence pour participation à une compétition</h2>
+                <p>pour l'inscrit</p>
+                <t t-esc="doc.name"/>
+                <p>au niveau</p>
+                <t t-esc="doc.grade"/>
+                <p>textextextextextextextextextextextextextextextextext</p>
+                
+            </t>
+        </t>
+    </template>
+
+    <template id="report_competition_participations_view">
+        <t t-call="web.html_container">
+            <h2>Participations list</h2>
+            <t t-foreach="docs" t-as="doc">
+                <t t-esc="doc.name"/>
+                <t t-foreach="doc.participation_ids" t-as="participation">
+                    <li>
+                        <p>Nom</p>
+                        <t t-field="participation.name"/>
+                        <p>Niveau</p>
+                        <t t-field="participation.grade"/>
+                        <p>Encadreur</p>
+                        <t t-field="participation.enseignant_id"/>
+                    </li>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

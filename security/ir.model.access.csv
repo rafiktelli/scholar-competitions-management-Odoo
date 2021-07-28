@@ -1,0 +1,7 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+competition_manager,competition manager,model_esicompet_competition,group_manager,1,1,1,1
+participation_manager,participation manager,model_esicompet_participation,group_manager,1,1,1,1
+enseignant_manager,enseignant manager,model_esicompet_enseignant,group_manager,1,1,1,1
+competition_read_all,competition all,model_esicompet_competition,,1,0,0,0
+participation_read_all,participation all,model_esicompet_participation,,1,0,0,0
+enseignant_read_all,enseignant all,model_esicompet_enseignant,,1,0,0,0

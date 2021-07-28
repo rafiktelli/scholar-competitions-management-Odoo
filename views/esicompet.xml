@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="competition_form_view">
+        <field name="name">competition.form</field>
+        <field name="model">esicompet.competition</field>
+        <field name="arch" type="xml">
+            <form string="Competition Form">
+                <sheet>
+                    <group string="General">
+                        <field name="name"/>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="place"/>
+                        <field name="seats"/>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <group>
+                                <field name="validated"/>
+                                <field name="description"/>                            
+                            </group>
+                        </page>
+                        <page string="Participations">
+                            <field name="participation_ids">
+                                <tree string="Registered participations">
+                                    <field name="name"/>
+                                    <field name="grade"/>
+                                    <field string="Crée par" name="create_uid"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="enseignant_form_view">
+        <field name="name">enseignant.form</field>
+        <field name="model">esicompet.enseignant</field>
+        <field name="arch" type="xml">
+            <form string="Enseignant Form">
+                <sheet>
+                    <group string="General">
+                        <field name="name"/>
+                        <field name="email"/>
+                        <field name="nb_etud"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- override the automatically generated list view for competitions -->
+    <record model="ir.ui.view" id="competition_tree_view">
+        <field name="name">competition.tree</field>
+        <field name="model">esicompet.competition</field>
+        <field name="arch" type="xml">
+            <tree string="Competition Tree">
+                <field name="name"/>
+                <field name="start_date"/>
+                <field name="seats"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="enseignant_tree_view">
+        <field name="name">enseignant.tree</field>
+        <field name="model">esicompet.enseignant</field>
+        <field name="arch" type="xml">
+            <tree string="Enseignant Tree">
+                <field name="name"/>
+                <field name="email"/>
+                <field name="nb_etud"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="competition_search_view">
+        <field name="name">competition.search</field>
+        <field name="model">esicompet.competition</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="description"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="enseignant_search_view">
+        <field name="name">enseignant.search</field>
+        <field name="model">esicompet.enseignant</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="email"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- window action -->
+    <!--
+            The following tag is an action definition for a "window action",
+            that is an action opening a view or a set of views
+        -->
+    <record model="ir.actions.act_window" id="competition_list_action">
+        <field name="name">Competitions</field>
+        <field name="res_model">esicompet.competition</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create the first competition
+            </p>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="enseignant_list_action">
+        <field name="name">Enseignants</field>
+        <field name="res_model">esicompet.enseignant</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- top level menu: no parent -->
+    <menuitem id="main_esicompet_menu" name="ESI COMPET"/>
+    <!-- A first level in the left side menu is needed
+             before using action= attribute -->
+    <!--<menuitem id="esicompet_menu" name="ESI COMPET" parent="main_esicompet_menu"/> -->
+    <!-- the following menuitem should appear *after*
+             its parent esicompet_menu and *after* its
+             action competition_list_action -->
+    <menuitem id="competitions_menu" name="Competitions" parent="main_esicompet_menu" action="competition_list_action"/>
+    <!-- Full id location: action="esicompet.competition_list_action"
+             It is not required when it is the same module -->
+
+    <menuitem id="enseignants_menu" name="Enseignants" parent="main_esicompet_menu" action="enseignant_list_action"/>
+
+    <!-- participation form view -->
+    <record model="ir.ui.view" id="participation_form_view">
+        <field name="name">participation.form</field>
+        <field name="model">esicompet.participation</field>
+        <field name="arch" type="xml">
+            <form string="Participation Form">
+                <sheet>
+                    <group>
+                        <group string="General">
+                            <field name="competition_id"/>
+                            <field name="name"/>
+                            <field name="grade"/>
+
+                        </group>
+                        <group string="Organisation">
+                            <field name="supervisor_name"/>
+                            <field name="supervisor_type"/>
+                            <field name="ressources"/>
+                        </group>
+                        <group string="Encadrement">
+                            <field name="enseignant_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- participation tree/list view -->
+    <record model="ir.ui.view" id="participation_tree_view">
+        <field name="name">participation.tree</field>
+        <field name="model">esicompet.participation</field>
+        <field name="arch" type="xml">
+            <tree string="Participation Tree">
+                <field string="Crée par" name="create_uid"/>
+                <field name="name"/>
+                <field name="grade"/>
+                <field name="competition_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="participation_list_action">
+        <field name="name">Participations</field>
+        <field name="res_model">esicompet.participation</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="participation_menu" name="Participations" parent="main_esicompet_menu" action="participation_list_action"/>
+
+</odoo>
